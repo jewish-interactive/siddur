@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="app" id="ng-app">
+	<head>
+		<meta charset="utf-8">
+		<title>My Online Practice Siddur</title>
+		<link rel="stylesheet" href="resources/css/common.css"/>
+	</head>
+	<body ng-controller="appCtrl">
+		<script type="text/javascript">
+			window['isIE'] = false;
+		</script>
+		<!--[if lte IE 9]>
+		<script type="text/javascript">
+		window['isIE'] = true;
+		</script>
+		<![endif]-->
+
+		<div id="app"  >
+			<h3>My Online Practice Siddur</h3>
+			<div class="grades" ng-hide="activeGrade">
+				<br />
+				<br />
+				<h1>Select your grade</h1>
+				<a ng-repeat="g in grades" class="lan" ng-click="setGrade(g)" ng-class="{active : activeGrade == g}">Grade {{g}}</a>
+				<br /><br /><br /><br /><br />
+				<img src="resources/images/logos.png" />
+			</div>
+			<div class="gradesMenu" ng-class="{open:openMenu}">
+				<div class="currentGrade" ng-click="openMenu = !openMenu">
+					Grade {{activeGrade}}
+				</div>
+				<div class="allGrades" >
+					<a ng-repeat="g in grades" ng-click="setGrade(g); " ng-class="{active : activeGrade == g}">{{g}}</a>
+				</div>
+			</div>
+			
+			<div  class="contentArea" id="contentArea">
+				<div id="leftPage" ng-class="{off:off}"  ng-cloak>
+					<div class="wrapper">
+						<div ng-show="!previousPrayers">
+							<h5>Grade {{activeGrade}} prayers</h5>
+							<div class="tabs">
+								<div class="tab {{b.tabimage}}" ng-class="{active : prayer.titleenglish == b.titleenglish}" ng-repeat="b in data[activeGrade]"  ng-click="setPrayer(b)">
+									{{b.titleenglish}}
+									<div class="sound-icon" ng-click="togglePlay(b)" ng-hide="!b.soundfile"></div>
+									<div class="play" ng-click="play(b)" ng-hide="!b.soundfile || b.playing || b.playingSong"></div>
+									<div class="pause" ng-click="pause()" ng-hide="!b.soundfile || !b.playing"></div>
+									<!--<img ng-src="resources/images/{{b.tabimage}}.png" />-->
+									<div style="display:none">
+										<audio  id="audio{{b.soundfile}}" class="audio-tag" controls="controls" preload="none">
+											<source type="audio/mpeg" ng-src="{{b.soundfileVar}}"/>
+											<!--<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessingaudio}}.ogg"/>-->
+										</audio>
+									</div>
+									
+									<div class="sound-icon song" ng-click="togglePlaySong(b)" ng-hide="!b.songfile"></div>
+									<div class="play" ng-click="playSong(b)" ng-hide="!b.songfile || b.playingSong || b.playing"></div>
+									<div class="pause" ng-click="pauseSong()" ng-hide="!b.songfile || !b.playingSong"></div>
+									<!--<img ng-src="resources/images/{{b.tabimage}}.png" />-->
+									<div style="display:none">
+										<audio  id="audio{{b.songfile}}" class="audio-tag" controls="controls" preload="none">
+											<source type="audio/mpeg" ng-src="{{b.songfileVar}}"/>
+											<!--<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessingaudio}}.ogg"/>-->
+										</audio>
+									</div>
+								</div>
+							</div>
+							<br /><br/>
+							
+						</div>
+						<div ng-show="previousPrayers">
+							
+							<h5>Prayers already learnt</h5>
+							<div class="tabs">
+								<div ng-repeat="i in previousGrades()">
+									<div class="tab {{b.tabimage}}" ng-class="{active : prayer.titleenglish == b.titleenglish}" ng-repeat="b in data[activeGrade-i]"  ng-click="setPrayer(b)">
+									{{b.titleenglish}}
+									<div class="sound-icon" ng-click="togglePlay(b)" ng-hide="!b.soundfile"></div>
+									<div class="play" ng-click="play(b)" ng-hide="!b.soundfile || b.playing || b.playingSong"></div>
+									<div class="pause" ng-click="pause()" ng-hide="!b.soundfile || !b.playing"></div>
+									<!--<img ng-src="resources/images/{{b.tabimage}}.png" />-->
+									<div style="display:none">
+										<audio  id="audio{{b.soundfile}}" class="audio-tag" controls="controls" preload="none">
+											<source type="audio/mpeg" ng-src="{{b.soundfileVar}}"/>
+											<!--<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessingaudio}}.ogg"/>-->
+										</audio>
+									</div>
+									
+									<div class="sound-icon song" ng-click="togglePlaySong(b)" ng-hide="!b.songfile"></div>
+									<div class="play" ng-click="playSong(b)" ng-hide="!b.songfile || b.playingSong || b.playing"></div>
+									<div class="pause" ng-click="pauseSong()" ng-hide="!b.songfile || !b.playingSong"></div>
+									<!--<img ng-src="resources/images/{{b.tabimage}}.png" />-->
+									<div style="display:none">
+										<audio  id="audio{{b.songfile}}" class="audio-tag" controls="controls" preload="none">
+											<source type="audio/mpeg" ng-src="{{b.songfileVar}}"/>
+											<!--<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessingaudio}}.ogg"/>-->
+										</audio>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="rightPage" class="hebrew" ng-class="{off:off}"  ng-cloak>
+					<div class="wrapper">
+						<h1><span style="font-size:{{prayer.fontsize}}em">{{prayer.titlehebrew}}</span></h1>
+						
+						<div class="blessingHebrew" >
+							<div style="font-size:{{prayer.fontsize}}em">
+							<div ng-repeat="line in (prayer.texthebrew | newlines) track by $index"  class="line">{{line}}</div><br />
+							</div>
+						</div>
+					</div>
+					<!--<img src="resources/images/play-voiceover-button.png" class="play" ng-click="playAudio('audio'+blessing['blessinghaudio'+lan]+lan)" />-->
+				</div>
+				<a class="link gradePrayers" ng-click="previousPrayers = true " ng-hide="activeGrade == '1'" ng-class="{active : previousPrayers}" >Show prayers already learnt</a>
+				<a class="link payersLearnt" ng-click="previousPrayers = fale" ng-hide="activeGrade == '1'" ng-class="{active : !previousPrayers}">Show Grade {{activeGrade}} prayers</a>
+			</div>
+			<!--<a href="{{backUrl[env]}}"><img src="resources/images/back-to-menu.png"  class="back" ng-hide="!isApp" /></a>-->
+		</div>
+
+		</div>
+		<footer>
+			<img src="resources/images/logos.png" /><br />
+			©Jewish Interactive 2013 www.jewishinteractive.net
+		</footer>
+		</div>
+
+		<div class="hidden" style="display:none;">
+
+		</div>
+		<!-- javascripts -->
+		<script></script>
+		<script src="resources/js/data.js"></script>
+		<script src="resources/js/vendor/underscore-min.js"></script>
+		<script src="resources/js/vendor/angular.min.js"></script>
+		<script src="resources/js/vendor/angular-route.min.js"></script>
+		<script src="resources/js/app.js"></script>
+	</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="app" id="ng-app">
+	<head>
+		<meta charset="utf-8">
+		<title>JI Blessings app</title>
+		<link rel="stylesheet" href="resources/css/common.css"/>
+	</head>
+	<body ng-controller="appCtrl">
+		<script type="text/javascript">
+			window['isIE'] = false;
+		</script>
+		<!--[if lte IE 10]>
+		<script type="text/javascript">
+		window['isIE'] = true;
+		</script>
+		<![endif]-->
+
+		<div id="app"  >
+			<a ng-click="setLan('a')" ng-class="{active: lan=='a'}" class="lan">Ashkenazi </a> <a ng-click="setLan('s')" ng-class="{active:lan=='s'}" class="lan">Sephardi</a>
+			<div  class="contentArea" id="contentArea">
+				<div id="leftPage" ng-class="{off:off}"  ng-cloak>
+					<h2>{{blessing.heading}}</h2>
+					<div class="introEnglish instruction">
+						{{blessing.intro}}
+					</div>
+					<div class="blessingEnglish">
+						{{blessing.blessing}}
+					</div>
+					<img class="illustration" ng-src="resources/images/blessings/{{blessing.illustration}}.png" />
+					<img src="resources/images/play-voiceover-button.png" class="play" ng-click="playAudio('audio'+blessing.blessingaudio+'s')" />
+				</div>
+				<div id="rightPage" class="hebrew" ng-class="{off:off}"  ng-cloak>
+					<h1>{{blessing.headingh}}</h1>
+					<div class="blessingHebrew">
+						{{blessing.blessingh}}
+					</div>
+					<img src="resources/images/play-voiceover-button.png" class="play" ng-click="playAudio('audio'+blessing['blessinghaudio'+lan]+lan)" />
+				</div>
+				<div class="tabs">
+					<div class="tab {{b.tabimage}}" ng-class="{active : blessing.headingsound == b.headingsound}" ng-repeat="b in blessings"  ng-click="doTab(b)">
+						<img ng-src="resources/images/{{b.tabimage}}.png" />
+						<div style="display:none">
+							<audio id="audio{{b.blessingaudio}}s" class="audio-tag" controls="controls" preload="none">
+								<source type="audio/mpeg" src="resources/sounds/english-s-hebrew-s/mp3/{{b.blessingaudio}}.mp3"/>
+								<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessingaudio}}.ogg"/>
+							</audio>
+							<audio id="audio{{b.blessinghaudios}}s" class="audio-tag" controls="controls" preload="none">
+								<source type="audio/mpeg" src="resources/sounds/english-s-hebrew-s/mp3/{{b.blessinghaudios}}.mp3"/>
+								<source type="audio/ogg" src="resources/sounds/english-s-hebrew-s/ogg/{{b.blessinghaudios}}.ogg"/>
+							</audio>
+							<audio id="audio{{b.blessinghaudioa}}a" class="audio-tag" controls="controls" preload="none">
+								<source type="audio/mpeg" src="resources/sounds/english-a-hebrew-a/mp3/{{b.blessinghaudioa}}.mp3"/>
+								<source type="audio/ogg" src="resources/sounds/english-a-hebrew-a/ogg/{{b.blessinghaudioa}}.ogg"/>
+							</audio>
+						</div>
+					</div>
+				</div>
+				<a href="/sukkot"><img src="resources/images/back-to-menu.png"  class="back" ng-hide="!isApp" /></a>
+			</div>
+
+		</div>
+		<footer>
+			©Jewish Interactive 2013 www.jewishinteractive.net
+		</footer>
+		</div>
+
+		<div class="hidden" style="display:none;">
+			
+		</div>
+		<!-- javascripts -->
+		<script></script>
+		<script src="resources/js/data.js"></script>
+		<script src="resources/js/vendor/underscore-min.js"></script>
+		<script src="resources/js/vendor/angular.min.js"></script>
+		<script src="resources/js/app.js"></script>
+	</body>
+</html>

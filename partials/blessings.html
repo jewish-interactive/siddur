@@ -1,0 +1,17 @@
+<div id="leftPage" ng-class="{off:off}">
+	
+	
+
+</div>
+<div id="rightPage" class="hebrew" ng-class="{off:off}">
+	<h4>{{blessing.heading}}</h4>
+	<h1>{{blessing.headingh}}</h1>
+	<div class="blessingHebrew">
+		{{blessing.blessingh}}
+	</div>
+</div>
+<div class="tabs">
+	<div class="tab" ng-repeat="b in blessings" ng-click="doTab(b)">
+		{{b.heading}}
+	</div>
+</div>
