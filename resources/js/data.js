@@ -2,7 +2,7 @@ var appData ={
     "1": [
         {
             "titlehebrew": "מוֹדֶה אֲנִי",
-            "titleenglish": "Modeh Ani",
+            "titleenglish": "Modeh Ani TEST",
             "texthebrew": "מוֹדֶה אֲנִי לְפָנֶֽיךָ, מֶֽלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַֽרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶֽךָ.",
             "soundfile": "01-Modeh-Ani.mp3",
             "fontsize": 2,
